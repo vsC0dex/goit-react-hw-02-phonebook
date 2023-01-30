@@ -18,7 +18,7 @@ export default class PhoneBook extends Component {
     if (this.isDublicate(name, number)) {
       return Report.failure(
         'Oooops',
-        `${name} with number: ${number} is already in contacts`,
+        `Contact with name: ${name} or number: ${number} is already in contacts`,
         'OK'
       );
     }
@@ -46,12 +46,16 @@ export default class PhoneBook extends Component {
     const { contacts } = this.state;
     const result = contacts.find(({ name, number }) => {
       return (
-        name.toLowerCase() === normilizedName &&
+        name.toLowerCase() === normilizedName ||
         number.toLowerCase() === normilizedNumber
       );
     });
     return Boolean(result);
   }
+
+  handleFilter = ({ target }) => {
+    this.setState({ filter: target.value });
+  };
 
   getFilteredContacts() {
     const { filter, contacts } = this.state;
@@ -70,7 +74,7 @@ export default class PhoneBook extends Component {
   }
 
   render() {
-    const { addContact, handleChange, removeContact } = this;
+    const { addContact, handleFilter, removeContact } = this;
     const contacts = this.getFilteredContacts();
 
     return (
@@ -82,7 +86,7 @@ export default class PhoneBook extends Component {
           </div>
           <h3 className={styles.title}>Contacts</h3>
           <div className={styles.block}>
-            <PhonebookFilter handleChange={handleChange} />
+            <PhonebookFilter handleChange={handleFilter} />
             <PhonebookList removeContact={removeContact} contacts={contacts} />
           </div>
         </div>

@@ -9,7 +9,6 @@ const PhonebookFilter = ({ handleChange }) => {
       <input
         name="filter"
         onChange={handleChange}
-        type="text"
         placeholder="Filter contacts"
       />
     </div>
